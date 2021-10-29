@@ -1,4 +1,6 @@
 // import React from 'react';
+import BookList from './components/booksView/BookList'
+import LoanList from './components/loansView/LoanList'
 import './App.css';
 
 function App() {
@@ -9,23 +11,13 @@ function App() {
         Du har inget lånekort
         </header>
         <main>
-            <section>
-                De här böckerna kan du låna:
-
-                <ul>
-                    <li> Bok nr. 1 </li>
-                </ul>
-            </section>
+            <BookList />
 
             <section>
             Skaffa nytt lånekort
             </section>
 
-            <section>
-            Dessa böcker är utlånade:
-
-            bok nr. x, till besökare med lånekortet y
-            </section>
+            <LoanList />
         </main>
         </div>
     );

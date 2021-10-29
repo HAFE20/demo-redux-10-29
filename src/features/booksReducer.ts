@@ -1,10 +1,12 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-import { Book } from '../models/Book'
+import { Book, BookId } from '../models/Book'
+import { Loan } from '../models/Loan'
 
 // Actions på böcker:
-// - låna en bok
-// - lämna tillbaka en bok
-const actions = {}
+const borrowBook = createAction<Loan>('borrow book')
+const returnBook = createAction<BookId>('return book')
+// strängarna är ID för boken som lånas eller återlämnas
+const actions = { borrowBook, returnBook }
 
 // Initial state - vanligtvis så hämtar vi datan från ett API
 const initialState: Book[] = [
@@ -34,8 +36,33 @@ const initialState: Book[] = [
 	}
 ]
 
+// Övning: ta reda på hur man kan ange typen för ett action-objekt
 const booksReducer = createReducer(initialState, {
-	// Actions här
+	[borrowBook.toString()]: (state, action) => {
+		const id: BookId = action.payload.bookId
+		return state.map(book => {
+			// Längre, kanske tydligare
+			if( book.id !== id ) {
+				return book
+			} else {
+				return { ...book, stock: book.stock - 1 }
+			}
+			// Mer kompakt alternativ
+			// return book.id === id ? { ...book, stock: book.stock - 1 } : book
+		})
+	},
+
+	[returnBook.toString()]: (state, action) => {
+		const id: BookId = action.payload
+		return state.map(book => {
+			// Längre, kanske tydligare
+			if( book.id !== id ) {
+				return book
+			} else {
+				return { ...book, stock: book.stock + 1 }
+			}
+		})
+	}
 })
 
 

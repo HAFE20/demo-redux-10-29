@@ -1,4 +1,7 @@
+import { BookId } from '../models/Book'
+import { CardId } from '../models/LibraryCard'
+
 export interface Loan {
-	bookId: string;
-	cardId: string;
+	bookId: BookId;
+	cardId: CardId;
 }
